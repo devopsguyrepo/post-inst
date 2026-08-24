@@ -1,0 +1,26 @@
+# Development & Repositories
+codium
+tailscale
+terraform
+
+# VirtualBox - check for lastest build at https://www.virtualbox.org/wiki/Linux_Downloads
+virtualbox-7.1
+
+# Security, Privacy & Networking
+bleachbit
+exodus
+lynis
+nextdns
+protonmail-bridge
+proton-vpn-gtk-app
+tlp
+tlp-rdw
+
+# Productivity & Media
+code
+fingwit
+htop
+imagemagick-6.q16
+linphone-desktop
+steam-launcher
+vlc

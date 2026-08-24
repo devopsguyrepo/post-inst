@@ -20,5 +20,5 @@ URIs: https://download.vscodium.com/debs
 Suites: vscodium
 Components: main
 Architectures: ${ARCH:-amd64 arm64}
-Signed-By: /usr/share/keyrings/vscodium-archive-keyring.gpg
+Signed-By: /usr/share/keyrings/vscodium-archive-keyring.gpg 
 EOF

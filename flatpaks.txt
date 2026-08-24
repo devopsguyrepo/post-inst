@@ -1,0 +1,55 @@
+# Security, Privacy & System Tools
+com.belmoussaoui.Authenticator
+com.belmoussaoui.Decoder
+com.bitwarden.desktop
+com.github.d4nj1.tlpui
+com.github.tchx84.Flatseal
+dev.geopjr.Collision
+me.iepure.devtoolbox
+net.nokyan.Resources
+org.fkoehler.KTailctl
+org.freedesktop.Piper
+
+# Web Browsers
+com.brave.Browser
+com.vivaldi.Vivaldi
+io.github.ungoogled_software.ungoogled_chromium
+io.gitlab.librewolf_community
+org.chromium.Chromium
+
+# Productivity & Notes
+com.todoist.Todoist
+io.dbeaver.DBeaverCommunity
+md.obsidian.Obsidian
+org.onlyoffice.desktopeditors
+org.standardnotes.standardnotes
+
+# Media, Streaming & Entertainment
+com.github.iwalton3.jellyfin-media-player
+com.obsproject.Studio
+com.stremio.Stremio
+edu.mit.Scratch
+io.freetubeapp.FreeTube
+io.github.mlm_games.pomodorot
+io.gitlab.adhami3310.Converter
+net.davidotek.pupgui2
+net.sourceforge.scidvspc.scidvspc
+org.filezillaproject.Filezilla
+org.flameshot.Flameshot
+org.gimp.GIMP
+org.kde.kdenlive
+org.qbittorrent.qBittorrent
+
+# Communication & Sharing
+com.discordapp.Discord
+io.github.mimbrero.WhatsAppDesktop
+org.gnome.NetworkDisplays
+org.localsend.localsend_app
+org.telegram.desktop
+us.zoom.Zoom
+
+# Utilities & Remote Management
+io.github.zaedus.spider
+org.raspberrypi.rpi-imager
+org.remmina.Remmina
+org.tigervnc.vncviewer

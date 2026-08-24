@@ -38,32 +38,23 @@ trap 'kill "$SUDO_LOOP_PID" 2>/dev/null || true' EXIT
 # --------------------------------------------
 log_info "Preparing system directories and environment..."
 
-# 1. Create keyrings directories once upfront
+# Resolve absolute path to script folder
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+MODULES_DIR="$SCRIPT_DIR/modules"
+
+# Create keyrings directories once upfront
 sudo install -m 0755 -d /etc/apt/keyrings
 sudo install -m 0755 -d /usr/share/keyrings
 
-# 2. Export environment variables so child modules can use them directly
+# Export environment variables for child modules
 export ARCH="$(dpkg --print-architecture)"
 export UBUNTU_CODENAME="$(. /etc/os-release && echo "${UBUNTU_CODENAME:-$UBUNTU_CODENAME}")"
 
 # --------------------------------------------
 # 2. Custom Repositories & PPAs
 # --------------------------------------------
-MODULES_DIR="$SCRIPT_DIR/modules"
-
-PPA_REPOS=(
-    ppa:mozillateam/ppa
-)
-
-# Add PPAs if array is not empty
-if [ ${#PPA_REPOS[@]} -gt 0 ]; then
-    log_info "Adding Launchpad PPAs..."
-    sudo add-apt-repository -y "${PPA_REPOS[@]}"
-fi
-
-# Execute Third-Party Repository Modules
 if [ -d "$MODULES_DIR" ]; then
-    log_info "Executing third-party repository modules in $MODULES_DIR..."
+    log_info "Executing repository setup modules in $MODULES_DIR..."
     for module in "$MODULES_DIR"/*.sh; do
         # Prevent failure if no .sh files match the glob
         [ -e "$module" ] || continue
@@ -75,6 +66,7 @@ else
     log_error "Modules directory not found at $MODULES_DIR!"
     exit 1
 fi
+
 # --------------------------------------------
 # 3. System Updates
 # --------------------------------------------
@@ -100,33 +92,39 @@ sudo apt install -y firefox-esr
 # --------------------------------------------
 # 5. Native Packages (APT)
 # --------------------------------------------
-APT_PACKAGES=(
-    curl
-    git
-    build-essential
-    htop
-    vlc
-    vim
-)
-
-log_info "Installing APT packages..."
-sudo apt install -y "${APT_PACKAGES[@]}"
+if [ -f "/apt_apps.txt" ]; then
+    log_info "Installing user APT packages..."
+    # Read non-empty lines into an array
+    mapfile -t APT_APPS < <(grep -v '^$' "/apt_apps.txt")
+    if [ ${#APT_APPS[@]} -gt 0 ]; then
+        sudo apt install -y "${APT_APPS[@]}"
+        log_success "APT packages restored!"
+    fi
+fi
 
 # --------------------------------------------
 # 6. Flatpaks
 # --------------------------------------------
-FLATPAKS=(
-    com.spotify.Client
-    org.signal.Signal
-)
-
-if command -v flatpak &> /dev/null; then
-    log_info "Installing Flatpak applications..."
-    flatpak install -y flathub "${FLATPAKS[@]}"
+if [ -f "/flatpaks.txt" ] && command -v flatpak &>/dev/null; then
+    log_info "Installing Flatpaks..."
+    mapfile -t FLATPAKS < <(grep -v '^$' "/flatpaks.txt")
+    if [ ${#FLATPAKS[@]} -gt 0 ]; then
+        flatpak install -y flathub "${FLATPAKS[@]}"
+        log_success "Flatpaks restored!"
+    fi
 fi
 
 # --------------------------------------------
-# 7. NetworkManager MAC Address Randomization
+# 7. Enable and start TLP power management service
+# --------------------------------------------
+if command -v tlp &>/dev/null; then
+    log_info "Enabling TLP power management service..."
+    sudo systemctl enable tlp
+    sudo tlp start
+fi
+
+# --------------------------------------------
+# 8. NetworkManager MAC Address Randomization
 # --------------------------------------------
 log_info "Configuring MAC address randomization..."
 
@@ -142,7 +140,7 @@ EOF
 sudo systemctl restart NetworkManager
 
 # --------------------------------------------
-# 8. Cleanup
+# 9. Cleanup
 # --------------------------------------------
 log_info "Cleaning up leftover packages..."
 sudo apt autoremove -y && sudo apt clean

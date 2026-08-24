@@ -13,8 +13,8 @@ sudo chmod 0644 /usr/share/keyrings/docker.asc
 sudo tee /etc/apt/sources.list.d/docker.sources > /dev/null <<EOF
 Types: deb
 URIs: https://download.docker.com/linux/ubuntu
-Suites: ${SYS_CODENAME}
+Suites: ${UBUNTU_CODENAME}
 Components: stable
-Architectures: ${SYS_ARCH}
+Architectures: ${ARCH}
 Signed-By: /usr/share/keyrings/docker.asc
 EOF
