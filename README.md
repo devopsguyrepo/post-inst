@@ -40,7 +40,7 @@ On some base Debian/Ubuntu installations, `git` may not be present by default. I
 sudo apt update && sudo apt install -y 
 ```
 
-### 2. Ensure Git is Installed
+### 2. Clone the Repository
 
 Clone this repository to your newly installed Linux system:
 
