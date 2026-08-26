@@ -37,7 +37,7 @@ Automated post-installation bootstrapper for **Linux Mint** and **Debian/Ubuntu-
 On some base Debian/Ubuntu installations, `git` may not be present by default. Install or verify it first:
 
 ```bash
-sudo apt update && sudo apt install -y 
+sudo apt update && sudo apt install -y git
 ```
 
 ### 2. Clone the Repository
