@@ -13,6 +13,7 @@ lynis
 nextdns
 protonmail-bridge
 proton-vpn-gtk-app
+stow
 tlp
 tlp-rdw
 

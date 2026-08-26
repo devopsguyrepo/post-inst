@@ -8,12 +8,12 @@ dev.geopjr.Collision
 me.iepure.devtoolbox
 net.nokyan.Resources
 org.fkoehler.KTailctl
-org.freedesktop.Piper
+# org.freedesktop.Piper
 
 # Web Browsers
 com.brave.Browser
 com.vivaldi.Vivaldi
-io.github.ungoogled_software.ungoogled_chromium
+# io.github.ungoogled_software.ungoogled_chromium
 io.gitlab.librewolf_community
 org.chromium.Chromium
 
@@ -31,8 +31,8 @@ com.stremio.Stremio
 edu.mit.Scratch
 io.freetubeapp.FreeTube
 io.github.mlm_games.pomodorot
-io.gitlab.adhami3310.Converter
-net.davidotek.pupgui2
+io.gitlab.adhami3310.Converter 
+# net.davidotek.pupgui2 - ProtonQT
 net.sourceforge.scidvspc.scidvspc
 org.filezillaproject.Filezilla
 org.flameshot.Flameshot
@@ -43,7 +43,7 @@ org.qbittorrent.qBittorrent
 # Communication & Sharing
 com.discordapp.Discord
 io.github.mimbrero.WhatsAppDesktop
-org.gnome.NetworkDisplays
+# org.gnome.NetworkDisplays - Gnome Network Display
 org.localsend.localsend_app
 org.telegram.desktop
 us.zoom.Zoom
