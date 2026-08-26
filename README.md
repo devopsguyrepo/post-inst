@@ -38,6 +38,7 @@ On some base Debian/Ubuntu installations, `git` may not be present by default. I
 
 ```bash
 sudo apt update && sudo apt install -y 
+```
 
 ### 2. Ensure Git is Installed
 
