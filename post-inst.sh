@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# post-inst.sh - Linux Mint Automated Restoration Script
+# post-inst.sh - Linux Mint / Debian-based Automated Restoration Script
 #
 # Usage:
 #     chmod +x post-inst.sh
@@ -55,12 +55,12 @@ export UBUNTU_CODENAME="$(. /etc/os-release && echo "${UBUNTU_CODENAME:-$UBUNTU_
 # --------------------------------------------
 if [ -d "$MODULES_DIR" ]; then
     log_info "Executing repository setup modules in $MODULES_DIR..."
-    for module in "$MODULES_DIR"/*.sh; do
-        # Prevent failure if no .sh files match the glob
+    for module in "$MODULES_DIR"/repo-*.sh; do
+        # Prevent failure if no repo .sh files match the glob
         [ -e "$module" ] || continue
         
-        log_info "Running module: $(basename "$module")"
-        bash "$module"
+        log_info "Running repository module: $(basename "$module")"
+        ( cd "$SCRIPT_DIR" && bash "$module" )
     done
 else
     log_error "Modules directory not found at $MODULES_DIR!"
@@ -92,10 +92,12 @@ sudo apt install -y firefox-esr
 # --------------------------------------------
 # 5. Native Packages (APT)
 # --------------------------------------------
-if [ -f "/apt_apps.txt" ]; then
+if [ -f "$SCRIPT_DIR/apt_apps.txt" ]; then
     log_info "Installing user APT packages..."
-    # Read non-empty lines into an array
-    mapfile -t APT_APPS < <(grep -v '^$' "/apt_apps.txt")
+    
+    # Strip full & inline comments
+    mapfile -t APT_APPS < <(sed -e 's/#.*//' -e '/^[[:space:]]*$/d' -e 's/[[:space:]]*$//' "$SCRIPT_DIR/apt_apps.txt")
+    
     if [ ${#APT_APPS[@]} -gt 0 ]; then
         sudo apt install -y "${APT_APPS[@]}"
         log_success "APT packages restored!"
@@ -105,9 +107,12 @@ fi
 # --------------------------------------------
 # 6. Flatpaks
 # --------------------------------------------
-if [ -f "/flatpaks.txt" ] && command -v flatpak &>/dev/null; then
+if [ -f "$SCRIPT_DIR/flatpaks.txt" ] && command -v flatpak &>/dev/null; then
     log_info "Installing Flatpaks..."
-    mapfile -t FLATPAKS < <(grep -v '^$' "/flatpaks.txt")
+    
+    # Reads file, strips full-line comments (#), inline comments (#...), and trailing whitespace
+    mapfile -t FLATPAKS < <(sed -e 's/#.*//' -e '/^[[:space:]]*$/d' -e 's/[[:space:]]*$//' "$SCRIPT_DIR/flatpaks.txt")
+    
     if [ ${#FLATPAKS[@]} -gt 0 ]; then
         flatpak install -y flathub "${FLATPAKS[@]}"
         log_success "Flatpaks restored!"
@@ -115,7 +120,31 @@ if [ -f "/flatpaks.txt" ] && command -v flatpak &>/dev/null; then
 fi
 
 # --------------------------------------------
-# 7. Enable and start TLP power management service
+# 7. Post-Install User Group Adjustments
+# --------------------------------------------
+if command -v docker &>/dev/null; then
+    log_info "Adding $USER to the docker group..."
+    sudo usermod -aG docker "$USER"
+fi
+
+# --------------------------------------------
+# 8. Restore Local Dotfiles (GNU Stow)
+# --------------------------------------------
+if [ -f "$MODULES_DIR/dotfiles.sh" ]; then
+    log_info "Executing dotfiles restoration module..."
+    ( cd "$SCRIPT_DIR" && bash "$MODULES_DIR/dotfiles.sh" )
+fi
+
+# --------------------------------------------
+# 9. Provision Network Services (NextDNS & Tailscale)
+# --------------------------------------------
+if [ -f "$MODULES_DIR/net-provision.sh" ]; then
+    log_info "Executing network provisioning module..."
+    ( cd "$SCRIPT_DIR" && bash "$MODULES_DIR/net-provision.sh" )
+fi
+
+# --------------------------------------------
+# 10. Enable Power Management (TLP)
 # --------------------------------------------
 if command -v tlp &>/dev/null; then
     log_info "Enabling TLP power management service..."
@@ -124,7 +153,7 @@ if command -v tlp &>/dev/null; then
 fi
 
 # --------------------------------------------
-# 8. NetworkManager MAC Address Randomization
+# 11. NetworkManager MAC Address Randomization
 # --------------------------------------------
 log_info "Configuring MAC address randomization..."
 
@@ -140,7 +169,7 @@ EOF
 sudo systemctl restart NetworkManager
 
 # --------------------------------------------
-# 9. Cleanup
+# 12. Cleanup
 # --------------------------------------------
 log_info "Cleaning up leftover packages..."
 sudo apt autoremove -y && sudo apt clean
