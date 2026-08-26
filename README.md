@@ -33,7 +33,13 @@ Automated post-installation bootstrapper for **Linux Mint** and **Debian/Ubuntu-
 
 ## 📋 Prerequisites & Setup
 
-### 1. Clone the Repository
+### 1. Ensure Git is Installed
+On some base Debian/Ubuntu installations, `git` may not be present by default. Install or verify it first:
+
+```bash
+sudo apt update && sudo apt install -y 
+
+### 2. Ensure Git is Installed
 
 Clone this repository to your newly installed Linux system:
 
@@ -42,7 +48,7 @@ git clone https://github.com/your-username/post-inst.git ~/post-inst
 cd ~/post-inst
 ```
 
-### 2. Populate Credentials
+### 3. Populate Credentials
 
 Copy the `.credentials.example` file to create your local `.credentials` file, which should be ignored by Git:
 
@@ -57,7 +63,7 @@ Edit `.credentials` and set your configuration variables:
 NEXTDNS_PROFILE_ID="your_profile_id_here"
 ```
 
-### 3. Populate Local Dotfiles & Keys
+### 4. Populate Local Dotfiles & Keys
 
 Before executing the script, place your backed-up configuration files into their respective subdirectories within `dotfiles/`:
 
