@@ -13,19 +13,15 @@ virtualbox-7.1
 
 # Security, Privacy & Networking
 bleachbit
-exodus
 lm-sensors
 lynis
 nextdns
-protonmail-bridge
-proton-vpn-gtk-app
 psensor
 stow
 tlp
 tlp-rdw
 
 # Productivity & Media
-code
 copyq
 fingwit
 htop
