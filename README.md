@@ -80,7 +80,7 @@ Before executing the script, place your backed-up configuration files into their
 Make the script executable and run it as a standard user. **Do not run it directly with `sudo`** — it will prompt for elevation when needed.
 
 ```bash
-chmod +x post-inst.sh
+chmod +x post-inst.sh modules/*.sh
 ./post-inst.sh
 ```
 

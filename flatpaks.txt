@@ -25,7 +25,7 @@ org.onlyoffice.desktopeditors
 org.standardnotes.standardnotes
 
 # Media, Streaming & Entertainment
-com.github.iwalton3.jellyfin-media-player
+org.jellyfin.JellyfinDesktop
 com.obsproject.Studio
 com.stremio.Stremio
 edu.mit.Scratch
@@ -42,7 +42,6 @@ org.qbittorrent.qBittorrent
 
 # Communication & Sharing
 com.discordapp.Discord
-io.github.mimbrero.WhatsAppDesktop
 # org.gnome.NetworkDisplays
 org.localsend.localsend_app
 org.telegram.desktop
@@ -50,6 +49,5 @@ us.zoom.Zoom
 
 # Utilities & Remote Management
 io.github.zaedus.spider
-org.raspberrypi.rpi-imager
 org.remmina.Remmina
 org.tigervnc.vncviewer

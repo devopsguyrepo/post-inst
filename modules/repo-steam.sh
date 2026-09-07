@@ -2,17 +2,21 @@
 
 set -euo pipefail
 
-echo -e "\e[34m[MODULE]\e[0m Setting up Steam APT repository..."
+echo -e "\e[34m[MODULE]\e[0m Setting up Steam repository..."
 
-# Fetch Steam official keyring
-sudo curl -fsSL https://repo.steampowered.com/steam/archive/stable/steam.gpg \
-    -o /usr/share/keyrings/steam-archive-keyring.gpg
+# Remove any pre-existing or auto-generated Steam source files
+sudo rm -f /etc/apt/sources.list.d/steam*.list /etc/apt/sources.list.d/steam*.sources
+
+# Download official Valve keyring
+curl -fsSL https://repo.steampowered.com/steam/archive/stable/steam-archive-keyring.gpg | \
+    sudo tee /usr/share/keyrings/steam-archive-keyring.gpg > /dev/null
 
 sudo chmod 0644 /usr/share/keyrings/steam-archive-keyring.gpg
 
-# Add repository (Steam requires i386 architecture support)
+# Enable 32-bit architecture (required for Steam)
 sudo dpkg --add-architecture i386
 
+# Add clean DEB822 entry
 sudo tee /etc/apt/sources.list.d/steam.sources > /dev/null <<EOF
 Types: deb
 URIs: https://repo.steampowered.com/steam

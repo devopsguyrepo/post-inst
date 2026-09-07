@@ -100,7 +100,7 @@ if [ -f "$SCRIPT_DIR/apt_apps.txt" ]; then
     # Pre-accept Microsoft TrueType Core Fonts EULA for automated installs
     echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | sudo debconf-set-selections
     echo "ttf-mscorefonts-installer msttcorefonts/present-mscorefonts-eula note" | sudo debconf-set-selections
-    
+
     # Strip full & inline comments
     mapfile -t APT_APPS < <(sed -e 's/#.*//' -e '/^[[:space:]]*$/d' -e 's/[[:space:]]*$//' "$SCRIPT_DIR/apt_apps.txt")
     
@@ -113,15 +113,19 @@ fi
 # --------------------------------------------
 # 6. Flatpaks
 # --------------------------------------------
-if [ -f "$SCRIPT_DIR/flatpaks.txt" ] && command -v flatpak &>/dev/null; then
-    log_info "Installing Flatpaks..."
-    
-    # Reads file, strips full-line comments (#), inline comments (#...), and trailing whitespace
-    mapfile -t FLATPAKS < <(sed -e 's/#.*//' -e '/^[[:space:]]*$/d' -e 's/[[:space:]]*$//' "$SCRIPT_DIR/flatpaks.txt")
-    
-    if [ ${#FLATPAKS[@]} -gt 0 ]; then
-        flatpak install -y flathub "${FLATPAKS[@]}"
-        log_success "Flatpaks restored!"
+if [ -f "$SCRIPT_DIR/flatpaks.txt" ]; then
+    log_info "Installing Flatpak applications..."
+
+    # Ensure Flathub remote is added system-wide
+    sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+    # Parse flatpaks.txt (removing comments and blank lines)
+    mapfile -t FLATPAK_APPS < <(sed -e 's/#.*//' -e '/^[[:space:]]*$/d' -e 's/[[:space:]]*$//' "$SCRIPT_DIR/flatpaks.txt")
+
+    if [ ${#FLATPAK_APPS[@]} -gt 0 ]; then
+        # Use sudo and -y for hands-free system deployment
+        sudo flatpak install -y flathub "${FLATPAK_APPS[@]}"
+        log_success "Flatpak applications restored!"
     fi
 fi
 
