@@ -28,7 +28,6 @@ htop
 imagemagick-6.q16
 linphone-desktop
 rpi-imager
-steam-launcher
 tree
 ttf-mscorefonts-installer
 vlc
