@@ -4,7 +4,7 @@ Automated post-installation bootstrapper for **Linux Mint** and **Debian/Ubuntu-
 
 ---
 
-## 🗂️ Repository Structure
+## Repository Structure
 
 ```text
 .
@@ -31,7 +31,7 @@ Automated post-installation bootstrapper for **Linux Mint** and **Debian/Ubuntu-
     └── net-provision.sh    # Provisions NextDNS and Tailscale
 ```
 
-## 📋 Prerequisites & Setup
+## Prerequisites & Setup
 
 ### 1. Ensure Git is Installed
 On some base Debian/Ubuntu installations, `git` may not be present by default. Install or verify it first:
@@ -75,7 +75,7 @@ Before executing the script, place your backed-up configuration files into their
 
 > **Security:** Never commit private SSH keys, credentials, API tokens, or other sensitive information to Git. Ensure sensitive files are properly excluded through `.gitignore`.
 
-## 🚀 Usage
+## Usage
 
 Make the script executable and run it as a standard user. **Do not run it directly with `sudo`** — it will prompt for elevation when needed.
 
@@ -84,7 +84,7 @@ chmod +x post-inst.sh
 ./post-inst.sh
 ```
 
-## 🔄 Execution Breakdown
+## Execution Breakdown
 
 1. **System Prep & Keyrings**
    Prepares `/etc/apt/keyrings` and `/usr/share/keyrings`.
@@ -102,9 +102,9 @@ chmod +x post-inst.sh
    Installs and activates the NextDNS daemon using your configured Profile ID and enables `tailscaled`.
 
 6. **System Hardening & Tweaks**
-   Configures NetworkManager MAC address randomization, enables TLP power management, and adds the current user to the `docker` group.
+   Configures system performance & ZRAM, NetworkManager MAC address randomization, enables TLP power management, and adds the current user to the `docker` group.
 
-## 🔑 Post-Installation Manual Steps
+## Post-Installation Manual Steps
 
 Once the script completes and you restart your machine, perform the following manual authentication and verification steps.
 
@@ -153,7 +153,7 @@ nextdns status
 resolvectl status
 ```
 
-## 🔐 Security Considerations
+## Security Considerations
 
 * Keep `.credentials` local and ensure it is listed in `.gitignore`.
 * Never commit private SSH keys to the repository.
@@ -214,7 +214,7 @@ This can be stowed into the user's home directory as:
 ~/.gitconfig -> ~/post-inst/dotfiles/git/.gitconfig
 ```
 
-## 🧪 Testing
+## Testing
 
 It is recommended to test the bootstrapper in a fresh virtual machine or disposable installation before using it on a primary system.
 
@@ -228,7 +228,7 @@ After making changes to a module, verify that:
 * Network services start successfully.
 * No credentials or private keys are exposed in Git.
 
-## 📄 License
+## License
 
 Add your preferred license here, for example:
 

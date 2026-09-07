@@ -1,5 +1,10 @@
 # Development & Repositories
 codium
+containerd.io
+docker-buildx-plugin
+docker-ce
+docker-ce-cli
+docker-compose-plugin
 tailscale
 terraform
 
@@ -9,19 +14,23 @@ virtualbox-7.1
 # Security, Privacy & Networking
 bleachbit
 exodus
+lm-sensors
 lynis
 nextdns
 protonmail-bridge
 proton-vpn-gtk-app
+psensor
 stow
 tlp
 tlp-rdw
 
 # Productivity & Media
 code
+copyq
 fingwit
 htop
 imagemagick-6.q16
 linphone-desktop
 steam-launcher
+ttf-mscorefonts-installer
 vlc

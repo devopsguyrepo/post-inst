@@ -47,8 +47,10 @@ sudo install -m 0755 -d /etc/apt/keyrings
 sudo install -m 0755 -d /usr/share/keyrings
 
 # Export environment variables for child modules
+# Sources os-release safely; defaults to UBUNTU_CODENAME, falling back to VERSION_CODENAME for Debian
+source /etc/os-release
 export ARCH="$(dpkg --print-architecture)"
-export UBUNTU_CODENAME="$(. /etc/os-release && echo "${UBUNTU_CODENAME:-$UBUNTU_CODENAME}")"
+export UBUNTU_CODENAME="${UBUNTU_CODENAME:-${VERSION_CODENAME}}"
 
 # --------------------------------------------
 # 2. Custom Repositories & PPAs
@@ -144,16 +146,26 @@ if [ -f "$MODULES_DIR/net-provision.sh" ]; then
 fi
 
 # --------------------------------------------
-# 10. Enable Power Management (TLP)
+# 10. Hardware, Kernel & System Performance Tweaks
 # --------------------------------------------
-if command -v tlp &>/dev/null; then
-    log_info "Enabling TLP power management service..."
-    sudo systemctl enable tlp
-    sudo tlp start
+if [ -f "$MODULES_DIR/system-tweaks.sh" ]; then
+    log_info "Executing system performance tweaks..."
+    ( cd "$SCRIPT_DIR" && bash "$MODULES_DIR/system-tweaks.sh" )
 fi
 
 # --------------------------------------------
-# 11. NetworkManager MAC Address Randomization
+# 11. Enable Power Management (TLP)
+# --------------------------------------------
+if [ -f "$MODULES_DIR/tlp-config.sh" ]; then
+    log_info "Deploying custom TLP drop-in configuration..."
+    ( cd "$SCRIPT_DIR" && bash "$MODULES_DIR/tlp-config.sh" )
+elif command -v tlp &>/dev/null; then
+    log_info "Enabling default TLP power management service..."
+    sudo systemctl enable --now tlp
+fi
+
+# --------------------------------------------
+# 12. NetworkManager MAC Address Randomization
 # --------------------------------------------
 log_info "Configuring MAC address randomization..."
 
@@ -169,7 +181,15 @@ EOF
 sudo systemctl restart NetworkManager
 
 # --------------------------------------------
-# 12. Cleanup
+# 13. Enable Security & Firewall Rules (UFW)
+# --------------------------------------------
+if [ -f "$MODULES_DIR/security-firewall.sh" ]; then
+    log_info "Executing firewall configuration module..."
+    ( cd "$SCRIPT_DIR" && bash "$MODULES_DIR/security-firewall.sh" )
+fi
+
+# --------------------------------------------
+# 14. Cleanup
 # --------------------------------------------
 log_info "Cleaning up leftover packages..."
 sudo apt autoremove -y && sudo apt clean

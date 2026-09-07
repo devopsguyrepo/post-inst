@@ -14,7 +14,7 @@ org.fkoehler.KTailctl
 com.brave.Browser
 com.vivaldi.Vivaldi
 # io.github.ungoogled_software.ungoogled_chromium
-io.gitlab.librewolf_community
+# io.gitlab.librewolf_community
 org.chromium.Chromium
 
 # Productivity & Notes
@@ -34,10 +34,10 @@ io.github.mlm_games.pomodorot
 io.gitlab.adhami3310.Converter 
 # net.davidotek.pupgui2 - ProtonQT
 net.sourceforge.scidvspc.scidvspc
-org.filezillaproject.Filezilla
+org.filezillaproject.Filezilla - Chess
 org.flameshot.Flameshot
 org.gimp.GIMP
-org.kde.kdenlive
+# org.kde.kdenlive
 org.qbittorrent.qBittorrent
 
 # Communication & Sharing
@@ -49,7 +49,7 @@ org.telegram.desktop
 us.zoom.Zoom
 
 # Utilities & Remote Management
-io.github.zaedus.spider
+io.github.zaedus.spider - Spider Web Apps
 org.raspberrypi.rpi-imager
 org.remmina.Remmina
 org.tigervnc.vncviewer
