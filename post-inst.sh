@@ -97,11 +97,15 @@ sudo apt install -y firefox-esr
 if [ -f "$SCRIPT_DIR/apt_apps.txt" ]; then
     log_info "Installing user APT packages..."
     
+    # Pre-accept Microsoft TrueType Core Fonts EULA for automated installs
+    echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | sudo debconf-set-selections
+    echo "ttf-mscorefonts-installer msttcorefonts/present-mscorefonts-eula note" | sudo debconf-set-selections
+    
     # Strip full & inline comments
     mapfile -t APT_APPS < <(sed -e 's/#.*//' -e '/^[[:space:]]*$/d' -e 's/[[:space:]]*$//' "$SCRIPT_DIR/apt_apps.txt")
     
     if [ ${#APT_APPS[@]} -gt 0 ]; then
-        sudo apt install -y "${APT_APPS[@]}"
+        sudo DEBIAN_FRONTEND=noninteractive apt install -y "${APT_APPS[@]}"
         log_success "APT packages restored!"
     fi
 fi

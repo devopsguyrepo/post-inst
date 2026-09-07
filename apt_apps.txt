@@ -21,12 +21,13 @@ stow
 tlp
 tlp-rdw
 
-# Productivity & Media
+# Productivity, Media, & Tools
 copyq
 fingwit
 htop
 imagemagick-6.q16
 linphone-desktop
 steam-launcher
+tree
 ttf-mscorefonts-installer
 vlc

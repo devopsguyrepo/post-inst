@@ -34,7 +34,7 @@ io.github.mlm_games.pomodorot
 io.gitlab.adhami3310.Converter 
 # net.davidotek.pupgui2 - ProtonQT
 net.sourceforge.scidvspc.scidvspc
-org.filezillaproject.Filezilla - Chess
+org.filezillaproject.Filezilla
 org.flameshot.Flameshot
 org.gimp.GIMP
 # org.kde.kdenlive
@@ -43,13 +43,13 @@ org.qbittorrent.qBittorrent
 # Communication & Sharing
 com.discordapp.Discord
 io.github.mimbrero.WhatsAppDesktop
-# org.gnome.NetworkDisplays - Gnome Network Display
+# org.gnome.NetworkDisplays
 org.localsend.localsend_app
 org.telegram.desktop
 us.zoom.Zoom
 
 # Utilities & Remote Management
-io.github.zaedus.spider - Spider Web Apps
+io.github.zaedus.spider
 org.raspberrypi.rpi-imager
 org.remmina.Remmina
 org.tigervnc.vncviewer
