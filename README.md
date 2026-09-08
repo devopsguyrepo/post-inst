@@ -23,7 +23,6 @@ Automated post-installation bootstrapper for **Linux Mint** and **Debian/Ubuntu-
     ├── repo-hashicorp.sh
     ├── repo-mozillateam.sh
     ├── repo-nextdns.sh
-    ├── repo-steam.sh
     ├── repo-tailscale.sh
     ├── repo-virtualbox.sh
     ├── repo-vscodium.sh

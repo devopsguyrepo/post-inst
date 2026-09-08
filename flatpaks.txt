@@ -18,7 +18,7 @@ com.vivaldi.Vivaldi
 org.chromium.Chromium
 
 # Productivity & Notes
-com.todoist.Todoist
+# com.todoist.Todoist
 io.dbeaver.DBeaverCommunity
 md.obsidian.Obsidian
 org.onlyoffice.desktopeditors
